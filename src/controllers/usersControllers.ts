@@ -4,6 +4,8 @@ import { z } from "zod";
 import { makeRegisterUseCase } from "../use-cases/factories/make-register-use-case";
 import { makeLoginUseCase } from "../use-cases/factories/make-login-use-case";
 
+export const blacklist: Record<string, boolean> = {};
+
 export async function register(req: Request, res: Response) {
   const registerBodySchema = z.object({
     email: z.email(),
@@ -67,10 +69,9 @@ export async function login(req: Request, res: Response) {
   }
 }
 
-
+// 💡 In the moment i won't put in the database one table for this to don't waste time, but stay the idea for future.
 export function logout(req: Request, res: Response) {
   const authHeader = req.headers["authorization"];
-  const blacklist: Record<string, boolean> = {};
 
   if (!authHeader) {
     return res.status(400).json({ error: "Token não informado" });

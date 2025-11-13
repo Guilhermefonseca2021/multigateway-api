@@ -5,7 +5,7 @@ import { UsersRepository } from "../repositories/prisma/user-repository";
 interface RegisterUseCaseRequest {
   email: string;
   password: string;
-  role?: string;
+  role: string | undefined;
 }
 
 interface RegisterUseCaseResponse {

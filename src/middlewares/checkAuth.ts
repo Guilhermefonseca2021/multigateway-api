@@ -1,38 +1,44 @@
-// import { NextFunction, Request, Response } from "express";
-// import jwt from "jsonwebtoken";
-// import config from "../config/config";
-// import { blacklist } from "../routes/user-routes";
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+import config from "../config/config";
+import { InvalidCredentialError } from "../use-cases/errors/invalid-credentials-error";
+import { blacklist } from "../controllers/usersControllers";
 
-// const isAuthDisabled = config.auth;
+export default function checkAuth(req: Request, res: Response, next: NextFunction) {
+  if (config.auth === "") {
+    return next();
+  }
 
-// export default function checkAuth(
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) {
-//   if (isAuthDisabled) {
-//     return next();
-//   }
+  const authHeader = req.headers.authorization;
 
-//   const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({
+      error: "Token não fornecido",
+    });
+  }
 
-//   // ✅ Token ausente
-//   if (!authHeader) {
-//     return res.status(401).json({ message: "No token provided." });
-//   }
+  const token = authHeader.replace("Bearer ", "").trim();
 
-//   const token = authHeader.replace("Bearer ", "");
+  if (blacklist[token]) {
+    return res.status(403).json({
+      error: "Token inválido (blacklist)",
+    });
+  }
 
-//   // ✅ Token está na blacklist?
-//   if (blacklist[token]) {
-//     return res.status(403).json({ message: "Invalid token." });
-//   }
+  try {
+    const decoded = jwt.verify(token, config.jwt_secretKey!);
+    (req as any).user = decoded;
+    return next();
+  } catch (error: any) {
+    if (error instanceof InvalidCredentialError) {
+      return res.status(401).json({
+        error: "Credenciais inválidas",
+      });
+    }
 
-//   // ✅ Verificar validade do JWT
-//   try {
-//     jwt.verify(token, config.jwt_secretKey!);
-//     return next();
-//   } catch (error) {
-//     return res.status(401).json({ message: "Invalid token" });
-//   }
-// }
+    return res.status(403).json({
+      error: "Token inválido ou expirado",
+      details: error.message,
+    });
+  }
+}

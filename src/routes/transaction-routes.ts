@@ -1,12 +1,12 @@
-// import { Router } from "express";
-// // import checkAuth from "../middlewares/checkAuth";
+import { Router } from "express";
+import checkAuth from "../middlewares/checkAuth";
+import { create } from "../controllers/transactionsController";
 
-// const transactionRoutes = Router();
+const transactionRoutes = Router();
 
-// // transactionRoutes.use(checkAuth);
+transactionRoutes.use(checkAuth);
 
-// // transactionRoutes.use("/users", userRouterPrivate);
-// // transactionRoutes.use("/produtos", produtosRouter);
-// // transactionRoutes.use("/pedidos", pedidosRouter);
+transactionRoutes.post("/create", create);
+// transactionRoutes.post("/:id/charge_back", chargeBack);
 
-// export default transactionRoutes;
+export default transactionRoutes;

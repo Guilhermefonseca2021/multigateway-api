@@ -1,29 +1,22 @@
+import { Prisma, Gateway } from "@prisma/client";
 import { prisma } from "../../libs/prisma";
-import { Gateway, Prisma } from "@prisma/client";
 import { GatewaysRepository } from "./gateway-repository";
 
 export class PrismaGatewaysRepository implements GatewaysRepository {
-  constructor() {}
-
-  create(data: Prisma.GatewayCreateInput): Promise<Gateway> {
+  async create(data: Prisma.GatewayCreateInput) {
     return prisma.gateway.create({ data });
   }
 
-  changeActivity(): Boolean {
-    return !prisma.gateway.fields.is_active;
+  async changeActivity(id: string, isActive: boolean) {
+    return prisma.gateway.update({
+      where: { id },
+      data: { is_active: isActive },
+    });
   }
 
-  async priority(position: number) {
-    const gateways = await prisma.gateway.findMany({
-      orderBy: { priority: "asc" },
-    });
-
-    if (gateways.length !== 2) {
-      throw new Error("É necessário ter exatamente 2 gateways.");
-    }
-
-    return prisma.gateway.update({
-      where: { id: gateways[position].id },
+  async priority(id: string, position: number): Promise<Gateway> {
+    return prisma.gateway.update({   
+      where: { id },
       data: { priority: position },
     });
   }

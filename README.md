@@ -1,73 +1,109 @@
-#  Sistema gerenciador de pagamentos
+<h1 align="center">💳 Sistema Gerenciador de Pagamentos</h1>
 
-## Rotas Públicas
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MySQL-00758F?style=for-the-badge&logo=mysql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Docker-0db7ed?style=for-the-badge&logo=docker&logoColor=white"/>
+</p>
 
-- [] Realizar o login
-- [] Realizar uma compra informando o produto
+<p align="center">
+  Sistema robusto para gerenciamento de pagamentos com múltiplos gateways, autenticação de usuários e níveis de acesso.  
+  Focado em escalabilidade, modularidade e boas práticas de desenvolvimento. 🚀
+</p>
 
-## 🛣️ Rotas Privadas
+---
 
-- [] Ativar/desativar um gateway
-- [] Alterar a prioridade de um gateway
-- [] CRUD de usuários com validação por roles
-- [] CRUD de produtos com validação por roles
-- [] Listar todos os clientes
-- [] Detalhe do cliente e todas suas compras
-- [] Listar todas as compras
-- [] Detalhes de uma compra
-- [] Realizar reembolso de uma compra junto ao gateway com validação por roles
+## ⚙️ Funcionalidades
 
-## Funcionalidades
+- ✅ Realizar uma compra
+- ⌛ Cobrança junto aos gateways  
+- 🔄 Ordem de prioridade definida  
+  - Caso o primeiro gateway falhe, o sistema tenta o próximo automaticamente  
+  - Se algum gateway processar com sucesso, o erro **não é informado**
+- 🧩 Facilidade para adicionar novos gateways  
 
-- [] realizar uma compra
-- [] cobrança junto aos gateways
-- [] ordem de prioridade definida
-   [] Caso o primeiro gateway dê erro, deve-se fazer a tentativa no segundo gateway. 
-   [] se algum der certo, nao informar erro.
-- [] facilidade de adicionar novos gateways
+---
 
+## 🌐 Rotas Públicas
 
-## Setup Project 
+- ✅ Realizar login  
+- ✅ Realizar uma compra informando o produto  
 
-```
-## Typescript
-$ npm tsc --init --rootDir src --outDir ./bin --esModuleInterop --lib ES2019 --module commonjs --noImplicitAny true
-## Run the project:
-$ ts-node ./src/index.ts
-## Docker initiate image
+---
+
+## 🔒 Rotas Privadas
+
+- ✅ Ativar/desativar um gateway  
+- ✅ Alterar prioridade de um gateway  
+- ✅ CRUD de usuários 
+  - [ ] validação por *roles*  
+- ✅ CRUD de produtos com validação por *roles*  
+  - [ ]com validação por *roles*  
+- [ ] Listar todos os clientes  
+- [ ] Detalhar cliente e todas suas compras  
+- ✅ Listar todas as compras  
+- ✅ Detalhar uma compra  
+- [ ] Realizar reembolso
+  - [ ]com validação por *roles*    
+
+---
+
+## 🧱 Estrutura de Roles
+
+| Role | Permissão |
+|------|------------|
+| 🛠️ **ADMIN** | Acesso total ao sistema |
+| 👨‍💼 **MANAGER** | Gerenciar produtos e usuários |
+| 💰 **FINANCE** | Gerenciar produtos e realizar reembolsos |
+| 🙋‍♂️ **USER** | Acesso básico às operações permitidas |
+
+---
+
+## 🧩 Setup do Projeto
+
+```bash
+# Instale as dependências
+$ npm install
+
+# Rode o projeto
+$ npm run dev
+
+# Baixe a imagem do MySQL
 $ docker image pull mysql:5.7
-## Download image
+
+# Suba os containers
 $ docker-compose up
-## Check docker containers
+
+# Verifique os containers ativos
 $ docker ps
-
 ```
+## 🧠 Níveis de Implementação
 
+### 🥉 Nível 1 — Iniciante / Júnior
+- Valor da compra vem direto pela API  
+- Gateways sem autenticação  
 
-## 📊 Níveis de Implementação
+### 🥈 Nível 2 — Júnior Experiente / Pleno
+- Valor da compra calculado via backend  
+- Gateways com autenticação  
 
-Nível 1
-Escolha esse nível se você se considera iniciante ou júnior, por exemplo:
-- Valor da compra vem direto pela API
-- Gateways sem autenticação
+### 🥇 Nível 3 — Pleno / Sênior
+- Valor vem de múltiplos produtos e quantidades  
+- Gateways autenticados  
+- Usuários com roles avançadas  
+- Uso de **TDD**  
+- Docker Compose com **MySQL**, aplicação e mock dos gateways  
 
-Nível 2
-Escolha esse nível se você é júnior experiente ou pleno, por exemplo:
-- Valor da compra vem do produto e suas quantidades calculada via back
-- Gateways com autenticação
+---
 
-Nível 3
-Escolha esse nível se você é um pleno ou sênior, por exemplo:
-- Valor da compra vem de múltiplos produtos e suas quantidades selecionadas e calculada via back
-- Gateways com autenticação
-- Usuários tem roles:
-  - ADMIN - faz tudo
-  - MANAGER - pode gerenciar produtos e usuários
-  - FINANCE - pode gerenciar produtos e realizar reembolso
-  - USER - pode o resto que não foi citado
-- Uso de TDD
-- Docker compose com MySQL, aplicação e mock dos gateways
+## 🖼️ Sistema em Execução
 
-## Sistema:
+<p align="center">
+  <img width="80%" src="https://github.com/user-attachments/assets/75feaa4e-b650-4d27-bc8f-a55efe4149f6" alt="Preview do sistema"/>
+</p>
 
-<img width="1408" height="887" alt="Image" src="https://github.com/user-attachments/assets/75feaa4e-b650-4d27-bc8f-a55efe4149f6" />
+<p align="center">
+  Feito com ❤️ para estudo e aprimoramento de boas práticas no desenvolvimento backend.
+</p>
