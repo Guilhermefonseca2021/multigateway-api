@@ -1,6 +1,4 @@
-// use-cases/manage-gateway-use-case.ts
-
-import { IGatewayRepository } from "../repositories/prisma/gateway-repository";
+import { GatewayRepository } from "../repositories/prisma/gateway-repository";
 
 interface ManageGatewayUseCaseRequest {
   id?: string;
@@ -11,7 +9,7 @@ interface ManageGatewayUseCaseRequest {
 }
 
 export class ManageGatewayUseCase {
-  constructor(private gatewayRepository: IGatewayRepository) {}
+  constructor(private gatewayRepository: GatewayRepository) {}
 
   async execute(data: ManageGatewayUseCaseRequest) {
     switch (data.action) {

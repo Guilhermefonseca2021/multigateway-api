@@ -1,23 +1,36 @@
-import { Prisma, Gateway } from "@prisma/client";
-import { prisma } from "../../libs/prisma";
-import { GatewaysRepository } from "./gateway-repository";
+import { Gateway, PrismaClient } from "@prisma/client";
+import {  GatewayRepository } from "./gateway-repository";
 
-export class PrismaGatewaysRepository implements GatewaysRepository {
-  async create(data: Prisma.GatewayCreateInput) {
-    return prisma.gateway.create({ data });
-  }
 
-  async changeActivity(id: string, isActive: boolean) {
-    return prisma.gateway.update({
-      where: { id },
-      data: { is_active: isActive },
+export class PrismaGatewayRepository implements GatewayRepository {
+  private prisma = new PrismaClient();
+
+  async findAll(): Promise<Gateway[]> {
+    return this.prisma.gateway.findMany({
+      orderBy: { priority: "asc" },
     });
   }
 
-  async priority(id: string, position: number): Promise<Gateway> {
-    return prisma.gateway.update({   
+  async findById(id: string): Promise<Gateway | null> {
+    return this.prisma.gateway.findUnique({ where: { id } });
+  }
+
+  async create(data: Omit<Gateway, "id">): Promise<Gateway> {
+    return this.prisma.gateway.create({ data });
+  }
+
+  async updatePriority(id: string, priority: number): Promise<Gateway> {
+    return this.prisma.gateway.update({
       where: { id },
-      data: { priority: position },
+      data: { priority },
+    });
+  }
+
+  async activateGateway(id: string, is_active: boolean): Promise<Gateway> {
+    return this.prisma.gateway.update({
+      where: { id },
+      data: { is_active },
     });
   }
 }
+

@@ -70,8 +70,11 @@ $ npm install
 # Rode o projeto
 $ npm run dev
 
+# Rode os testes
+$ npm run test
+
 # Baixe a imagem do MySQL
-$ docker image pull mysql:5.7
+$ docker image pull mysql:5.8
 
 # Suba os containers
 $ docker-compose up

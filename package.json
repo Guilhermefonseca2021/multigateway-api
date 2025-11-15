@@ -4,18 +4,21 @@
   "description": "- [] realizar uma compra\r - [] cobrança junto aos gateways\r - [] ordem de prioridade definida\r    [] Caso o primeiro gateway dê erro, deve-se fazer a tentativa no segundo gateway. \r    [] se algum der certo, nao informar erro.\r - [] facilidade de adicionar novos gateways",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@prisma/client": "^6.19.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.10",
+    "vitest": "^4.0.9",
     "zod": "^4.1.12"
   },
   "devDependencies": {
